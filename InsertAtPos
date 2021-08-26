@@ -1,0 +1,99 @@
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+
+struct node* head=NULL;
+
+void Insert(int x){
+
+    struct node* temp = (struct node*)malloc(sizeof(struct node));
+    temp->data = x;
+    temp->next = head;
+    head = temp;
+}
+void Insert_End(int p){
+
+    struct node* t1 = (struct node*)malloc(sizeof(struct node));
+    t1->data = p;
+    t1->next = NULL;
+    struct node* h;
+    h=head;
+    while(h->next!=NULL)
+    {
+        h=h->next;
+    }
+    h->next=t1;
+}
+void Insert_Pos(int da,int z){
+
+    struct node* ptr=(struct node*)malloc(sizeof(struct node));
+    ptr->data=da;
+    struct node* temp=head;
+    if(z==1)
+    {
+        ptr->next=head;
+        head=ptr;
+        return;
+    }
+    for(int i=1;i<z-1;i++)
+    {
+        temp=temp->next;
+    }
+    ptr->next=temp->next;
+    temp->next=ptr;
+    
+    
+}
+
+void Print(){
+
+    struct node* temp = head;
+    printf("\nThe List is ");
+    while(temp!=NULL){
+        printf(" %d", temp->data);
+        temp=temp->next;
+    }
+}
+
+int main(void){
+
+    printf("how many nodes to insert : ");
+    int n,i,x;
+    scanf("%d",&n);
+
+    for(i=0;i<n;i++){
+        printf("\nEnter the number ");
+        scanf("%d",&x);
+        Insert(x);
+    }
+    Print();
+    printf("\n--------------------------------------------------------");
+    printf("how many nodes to insert end  : ");
+    int k,j,p;
+    scanf("%d",&k);
+
+    for(j=0;j<k;j++){
+        printf("\nEnter the number ");
+        scanf("%d",&p);
+        Insert_End(p);
+    }
+    Print();
+    printf("\n--------------------------------------------------------");
+    printf("\nenter node to insert at position  : ");
+    printf("\nenter val:");
+    int v,pos;
+    scanf("%d",&v);
+    printf("enter pos:");
+    scanf("%d",&pos);
+    Insert_Pos(v,pos);
+    Print();
+    
+    return 0;
+}
+
