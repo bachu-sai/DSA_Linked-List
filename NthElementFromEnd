@@ -1,0 +1,94 @@
+
+
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+
+    int data;
+    struct node *next;
+};
+struct node* getnode(int x)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=x;
+    newnode->next=NULL;
+    return newnode;
+
+};
+struct node* Insert(int x,struct node *head)
+{
+
+    struct node *newnode= getnode(x);
+    if(head==NULL)
+        head=newnode;
+    else
+    {
+        struct node *temp=head;
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=newnode;
+
+
+    }
+    return head;
+
+}
+void NthElement(struct node*head,int n)
+{
+    /*struct node *f=head;
+    int c=1;
+    while(f!=NULL)
+    {
+        c++;
+        f=f->next;
+    }
+    int k=c-n;
+    struct node *t=head;
+    for(int i=1;i<k;i++)
+    {
+        t=t->next;
+    }
+    printf("%d",t->data);*/
+    struct node*slow=head,*fast=head;
+    for(int i=0;i<n;i++)
+    {
+        fast=fast->next;
+
+    }
+    while(fast!=NULL)
+    {
+        slow=slow->next;
+        fast=fast->next;
+    }
+    printf("%d",slow->data);
+}
+void Print(struct node * head)
+{
+    struct node *h=head;
+    while(h!=NULL)
+    {
+        printf("%d ",h->data);
+        h=h->next;
+    }
+}
+
+int main()
+{
+   struct node *head=NULL;
+    while(1)
+    {
+        printf("enter number:");int x;scanf("%d",&x);
+        if(x==0)
+            break;
+        head=Insert(x,head);
+
+
+    }
+    Print(head);
+    int n;printf("enter nth node from last:");scanf("%d",&n);
+    NthElement(head,n);
+    return 0;
+}
