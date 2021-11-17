@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+
+    int data;
+    struct node *next;
+};
+struct node* getnode(int x)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=x;
+    newnode->next=NULL;
+    return newnode;
+
+};
+struct node* Insert(int x,struct node *head)
+{
+
+    struct node *newnode= getnode(x);
+    if(head==NULL)
+        head=newnode;
+    else
+    {
+        struct node *temp=head;
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=newnode;
+
+
+    }
+    return head;
+
+}
+struct node *Reverse(struct node *head)
+{
+    struct node *curr=head;
+    struct node *prev=NULL;
+    struct node *next=NULL;
+    while(curr!=NULL)
+    {
+        next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+    }
+    return prev;
+
+}
+struct node *AddOne(struct node *head)
+{
+    struct node*res=head;
+    struct node *temp=NULL;
+    int c=1;
+    int s=0;
+    while(head!=NULL)
+    {
+        s = c + (head->data);
+        c=(s>=10) ? 1 : 0;
+        s = s % 10;
+        head->data=s;
+        temp=head;
+        head=head->next;
+
+    }
+    if(c==1)
+    {
+        struct node *g= getnode(c);
+        temp->next=g;
+    }
+    return res;
+
+}
+void Print(struct node * head)
+{
+    struct node *h=head;
+    while(h!=NULL)
+    {
+        printf("%d ",h->data);
+        h=h->next;
+    }
+}
+
+
+int main()
+{
+   struct node *head=NULL;
+    while(1)
+    {
+        printf("enter number:");int x;scanf("%d",&x);
+        if(x==0)
+            break;
+        head=Insert(x,head);
+
+    }
+    printf("\nList print:");
+    Print(head);
+    head=Reverse(head);
+    head=AddOne(head);
+    printf("\nAfter 1 to List:");
+    head=Reverse(head);
+    Print(head);
+}
