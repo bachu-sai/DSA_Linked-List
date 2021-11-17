@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+
+    int data;
+    struct node *next;
+};
+struct node* getnode(int x)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=x;
+    newnode->next=NULL;
+    return newnode;
+
+};
+struct node* Insert(int x,struct node *head)
+{
+
+    struct node *newnode= getnode(x);
+    if(head==NULL)
+        head=newnode;
+    else
+    {
+        struct node *temp=head;
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=newnode;
+
+
+    }
+    return head;
+
+}
+void Print(struct node * head)
+{
+    struct node *h=head;
+    while(h!=NULL)
+    {
+        printf("%d ",h->data);
+        h=h->next;
+    }
+}
+struct node * MoveLastToFirst(struct node *head)
+{
+    if(head==NULL || head->next==NULL)
+        return NULL;
+    struct node *curr=head;
+    struct node *prev=NULL;
+    while (curr->next != NULL)
+    {
+        prev = curr;
+        curr = curr->next;
+    }
+
+
+    prev->next = NULL;
+
+
+    curr->next = head;
+
+
+    head = curr;
+    return head;
+}
+
+int main()
+{
+   struct node *head=NULL;
+    while(1)
+    {
+        printf("enter number:");int x;scanf("%d",&x);
+        if(x==0)
+            break;
+        head=Insert(x,head);
+
+    }
+    printf("\nbefore print:");
+    Print(head);
+    head=MoveLastToFirst(head);
+    printf("\nafter print:");
+    Print(head);
+}
