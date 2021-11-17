@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+
+    int data;
+    struct node *next;
+};
+struct node* getnode(int x)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=x;
+    newnode->next=NULL;
+    return newnode;
+
+};
+struct node* Insert(int x,struct node *head)
+{
+
+    struct node *newnode= getnode(x);
+    if(head==NULL)
+        head=newnode;
+    else
+    {
+        struct node *temp=head;
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=newnode;
+
+
+    }
+    return head;
+
+}
+struct node* ReverseGrps(struct node *head,int grp)
+{
+    struct node* curr=head;
+    struct node* next=NULL;
+    struct node* prev=NULL;
+    int c=0;
+    while(curr!=NULL && c<grp)
+    {
+        next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+        c++;
+    }
+    if(next!=NULL)
+        head->next=ReverseGrps(next, grp);
+    return prev;
+}
+void Print(struct node * head)
+{
+    struct node *h=head;
+    while(h!=NULL)
+    {
+        printf("%d ",h->data);
+        h=h->next;
+    }
+}
+
+int main()
+{
+   struct node *head=NULL;
+    while(1)
+    {
+        printf("enter number:");int x;scanf("%d",&x);
+        if(x==0)
+            break;
+        head=Insert(x,head);
+
+    }
+    Print(head);
+    printf("\nenter grp no:");
+    int grp;scanf("%d",&grp);
+    head=ReverseGrps(head,grp);
+    Print(head);
+}
